@@ -25,7 +25,7 @@ def movie_list(request):
 def movie_detail(request, pk):
     try:
         movie = Movie.objects.get(pk=pk)
-    except Moive.DoesNotExist:
+    except Movie.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
