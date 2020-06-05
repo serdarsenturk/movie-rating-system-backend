@@ -1,31 +1,28 @@
 from rest_framework import serializers
-from movies.models import Movie
+from movies.models import Movie, Genre, Actor, Review, Score
 
 class MovieSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Movie
-		fields = ('name', 'genre', 'releasedYear', 'topic', 'actors', 'timeLength', 'budget', 'reviews', 'score', 'awards')
+		fields = ('id', 'name', 'genre', 'releasedYear', 'topic', 'actors', 'timeLength', 'budget', 'reviews', 'score', 'awards')
+		depth = 1
 
 class GenreSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Movie
-		field = (
-			'name',
-		)
+		model = Genre
+		fields = '__all__'
+
 class ActorSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Movie
-		field = (
-			'created',
-			'name',
-			'gender'
-		)
+		model = Actor
+		fields = '__all__'
 
-class MovieScoreSerializer(serializers.ModelSerializer):
+class ScoreSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Movie
-		field = (
-			'movie',
-			'score',
-			'scoreDate'
-		)
+		model = Score
+		fields = '__all__'
+
+class ReviewSerializer(serializers.ModelSerializer):
+	class Meta:
+		review = Review
+		fields = '__all__'

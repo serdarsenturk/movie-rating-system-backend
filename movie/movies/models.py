@@ -14,8 +14,8 @@ class Actor(models.Model):
 		(MALE, 'Male'),
 		(FEMALE,'Female')
 	)
-	created = models.DateTimeField(auto_now_add=True)
-	name = models.CharField(max_length=200, blank=True, default='')
+	name = models.TextField(max_length=200, blank=True, default='')
+	surname = models.TextField(max_length=200, blank=True, default='')
 	gender = models.CharField(
 		max_length=2,
 		choices=GENDER_CHOISES,
@@ -25,14 +25,11 @@ class Actor(models.Model):
 	class Meta:
 		ordering = ('name',)
 
-	def __str__(self):
-		return self.name
-
 class Review(models.Model):
     	review = models.CharField(max_length=200)
 
 class Score(models.Model):
-    	movieScore = models.CharField(max_length=200)
+    	movieScore = models.IntegerField(max_length=200)
 
 class Award(models.Model):
     	award = models.CharField(max_length=200)
@@ -41,18 +38,14 @@ class Award(models.Model):
 class Movie(models.Model):
 	name = models.CharField(max_length=200, blank=True, default='')
 	genre = models.ManyToManyField(Genre)
-	releasedYear = models.CharField(max_length=200, blank=True, default='')
+	releasedYear = models.IntegerField(max_length=200, blank=True, default='')
 	topic = models.CharField(max_length=200, blank=True, default='')
-	actors = models.ManyToManyField(Actor)
+	actors = models.ManyToManyField(Actor, related_name='movies')
 	timeLength = models.CharField(max_length=200, blank=True, default='')
-	budget = models.CharField(max_length=200, blank=True, default='')
-	reviews = models.ManyToManyField(Review)
-	score = models.ManyToManyField(Score)
+	budget = models.IntegerField(max_length=200, blank=True, default='')
+	reviews = models.ForeignKey(Review, on_delete=models.CASCADE)
+	score = models.ForeignKey(Score, on_delete=models.CASCADE)
 	awards = models.ManyToManyField(Award)
 
 	class Meta:
 		ordering = ['name']
-	
-	def __str__(self):
-    		return self.name
-
